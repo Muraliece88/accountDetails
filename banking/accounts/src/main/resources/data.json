@@ -1,0 +1,11 @@
+{
+  "customers": [
+    {"customerId":1, "name": "ABD","surName": "Villers"},
+    {"customerId":2, "name": "Heinrich","surName": "Klassen"},
+    {"customerId":3, "name": "Rassie","surName": "Dussen"},
+    {"customerId":4, "name": "Anrich","surName": "Norje"},
+    {"customerId":5, "name": "Kagiso","surName": "Rabada"}
+  ]
+
+
+}
