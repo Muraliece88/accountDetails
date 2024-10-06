@@ -95,7 +95,7 @@ public class Utility {
                     }
                     else {
                         log.error("Error while transaction insertion for requestId: {}" , traceId );
-                        throw new TransactionException("Error while transaction insertion for the new account"+createdAcc.getAccountId());
+                        throw new TransactionException("Error while transaction insertion for the newly account"+createdAcc.getAccountId());
 
                     }
                 });
