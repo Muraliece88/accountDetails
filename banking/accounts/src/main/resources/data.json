@@ -1,10 +1,10 @@
 {
   "customers": [
-    {"customerId":1, "name": "ABD","surName": "Villers"},
-    {"customerId":2, "name": "Heinrich","surName": "Klassen"},
-    {"customerId":3, "name": "Rassie","surName": "Dussen"},
-    {"customerId":4, "name": "Anrich","surName": "Norje"},
-    {"customerId":5, "name": "Kagiso","surName": "Rabada"}
+    {"customerId":1, "name": "Abraham","surName": "Villers"},
+    {"customerId":2, "name": "Heinrich","surName": "Classen"},
+    {"customerId":3, "name": "David","surName": "Walter"},
+    {"customerId":4, "name": "Anrich","surName": "Nada"},
+    {"customerId":5, "name": "KG","surName": "Victoria"}
   ]
 
 

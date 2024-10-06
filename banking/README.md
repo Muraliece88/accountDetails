@@ -3,7 +3,7 @@
 ## Frameworks Used
 
 Java 17, Spring Boot 3, Maven 3.8.
-For removing bolier plate code --- Lombok.
+For removing bolier plate code --- Lombok, --Mapstruct.
 API Documentation - OpenApi 3.0.3.
 Container- Docker
 Testing - Junit jupiter, Mockito, MockMvc
@@ -11,7 +11,9 @@ No checkstyles files used
 
 ## Considerations and assumptions
 1. Since the requirement was not to persist in any external DB, the developer chose to use hazelcast over In memory H2 DB
-2. Due to lack of time the developer could configure spring cloud config server to externalize the configuration properties
+2. API first approach was chosen 
+3. Due to lack of time the developer could configure spring cloud config server to externalize the configuration properties
+4. No plugins used to generate any class or methods
 
 ## Code setup and run(if docker is installed)
 1. Clone the project from gitHub
