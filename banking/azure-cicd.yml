@@ -40,7 +40,7 @@ steps:
         $(registry)/$(imageName):$(Build.BuildId)
 
   - task: AzureWebAppContainer@2
-    displayName: 'Deploy to Azure App Service'
+    displayName: 'Deploy to Azure App Service '
     inputs:
       azureSubscription: $(serviceConnection)
       appName: $(appServiceName)
