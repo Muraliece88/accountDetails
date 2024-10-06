@@ -3,7 +3,7 @@ name: accounts and transaction pipeline
 on:
   push:
     branches:
-      - feature/banking  # Trigger on push to the main branch
+      - feature/accounts  # Trigger on push to the main branch
 
 jobs:
   build:
