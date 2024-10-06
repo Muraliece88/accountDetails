@@ -1,0 +1,344 @@
+openapi: '3.0.3'
+info:
+  description: APIs for opening new account for customer and to view its transactions
+  title:  Customer accounts and transactions API
+  version: '3.0.0'
+  
+
+servers:
+  - url: http://localhost:8082/api/v1/accounts/open/
+    description: Base path of the API to open account
+  - url: http://localhost:8082/api/v1/accounts/customer/
+    description: Base path of the API to view customer details and transactions
+  - url: http://localhost:8081/api/v1/transactions/create
+    description: Base path of the transaction API to insert new transactions
+
+
+
+tags:
+  - name: Accounts
+    description: APIs for open account and view transactions
+security:
+  - basicAuth: [] 
+    
+paths: {
+  '/open/{customerId}': {
+      post: {
+        'operationId': 'openAccount',
+        'description': 'API to open account for customer',
+        'parameters': [
+          {
+            'name': 'customerId',
+            'in': 'path',
+            'required': true,
+            'description': 'customer id for whom account to be opened',
+            'schema': {
+              'type': 'integer',
+              'example': '1'
+            }
+          },
+          {
+            'name': 'initialCredit',
+            'in': 'query',
+            'required': true,
+            'description': 'inital amount to be credit when account is open',
+            'schema': {
+              'type': 'integer',
+              'example': '10'
+            }
+          }
+        ],
+      
+        'responses': {
+          '201': {
+            'description': 'Successful created a new current account',
+            'content': {
+              'application/json': {
+                'schema': {
+                   'type': 'string',
+                  'example': 'New account 1234 opened for the customer 1'
+                }
+              }
+            }
+          },
+          
+        
+         '400': {
+            'description': 'When input validation fails',
+            'content': {
+              'application/json': {
+                'schema': {
+                  '$ref': '#/components/responses/AccountNotFoundException'
+                }
+        }}
+    
+  },
+       '500': {
+                'description': 'When there is a technical fault within service',
+                'content': {
+                  'application/json': {
+                    'schema': {
+                      '$ref': '#/components/responses/TransactionException'
+                    }
+            }}
+        
+      }}
+      }
+  },
+  
+  '/customer/{customerId}':{
+    
+         get: {
+        'operationId': 'customerDetails',
+        'description': 'API to get the accounts and transaction of customer',
+        'parameters': [
+          {
+            'name': 'customerId',
+            'in': 'path',
+            'required': true,
+            'description': 'customer id for whom account to be viewed',
+            'schema': {
+              'type': 'integer',
+              'example': '1'
+            }
+          }],
+        'responses': {
+          '201': {
+            'description': 'Successful created a new current account',
+            'content': {
+              'application/json': {
+                'schema': {
+                  '$ref': '#/components/schemas/CustomerDTO'
+                }
+              }
+            }
+          },
+          
+        
+         '400': {
+            'description': 'When input validation fails',
+            'content': {
+              'application/json': {
+                'schema': {
+                  '$ref': '#/components/responses/AccountNotFoundException'
+                }
+        }}
+    
+  },
+       '500': {
+                'description': 'When there is a technical fault within service',
+                'content': {
+                  'application/json': {
+                    'schema': {
+                      '$ref': '#/components/responses/TransactionException'
+                    }
+            }}
+        
+      }}
+          
+        }
+},
+  '/create': {
+      post: {
+        'operationId': 'createTransaction',
+        'description': 'API to open account for customer',
+        'parameters': [
+          {
+            'name': 'amount',
+            'in': 'query',
+            'required': true,
+            'description': 'amount to be in the transaction',
+            'schema': {
+              'type': 'integer',
+              'example': '10'
+            }
+          }
+        ],
+      
+        'requestBody':
+       {
+         'required':true,
+          'description': 'params required to update a recipie',
+            'content': {
+              'application/json': {
+                'schema': {
+                  '$ref': '#/components/schemas/Account'
+                }
+              }
+            }
+       },
+        'responses': {
+          '201': {
+            'description': 'successful insertion of transaction',
+            'content': {
+              'application/json': {
+                'schema': {
+                  type: string,
+                  example: Transaction entry created  for the account number 
+                }
+              }
+            }
+          },
+       '500': {
+                'description': 'When there is a technical fault within service',
+                'content': {
+                  'application/json': {
+                    'schema': {
+                      '$ref': '#/components/responses/TransactionException'
+                    }
+            }}
+        
+      } 
+        }}
+    
+  }
+}
+
+
+components:
+  securitySchemes:
+    basicAuth:     
+      type: http
+      scheme: basic
+      
+  responses:
+    
+            
+    TransactionException:
+      description: when there technical issue while processing transaction
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+       
+            
+    AccountNotFoundException:
+      description: when the requested resource is not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+          example:
+            error: Invalid phone number
+            
+    Exception:
+      description: All generic exception
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+          example:
+            error: Technical issues when operation is performed
+            
+  schemas:
+    Errors:
+      type: object
+      properties:
+       status:
+          description: 'status of the error code'
+          type: integer
+       message:
+          description: 'error message'
+          type: string
+       timestamp:
+          description: 'timestamp value during when exception occured'
+          type: string
+          
+          
+    CustomerDTO:
+       type: object
+       properties:
+        name:
+          description: 'Name of the customer'
+          type: string
+          example: David
+        surName:
+          description: 'SurName of the customer'
+          type: string
+          example: Miller
+        accountList:
+          description: 'List of accounts owned by the customer'
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountDTO'
+        
+        
+    AccountDTO:
+       type: object
+       properties:
+        accountId:
+          description: 'ID of the account'
+          type: integer
+          example: 1
+        balance:
+          description: 'Balance in the account'
+          type: integer
+          example: 300
+        accountType:
+          description: 'Type of account'
+          type: string
+          example: Current Account
+        transactions:
+          description: 'List of transactions for that account'
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionDTO'
+            
+    TransactionDTO:
+       type: object
+       properties:
+        amount:
+          description: 'Amount is to be credit or debit'
+          type: integer
+          example: 50
+        time:
+          description: 'time of occurance'
+          type: string
+          example: 22-08-2025
+        transactionType:
+          description: 'Transaction type credit or debit'
+          type: string
+          example: CREDIT
+      
+    Account:
+       type: object
+       properties:
+        accountId:
+          description: 'ID of the account'
+          type: integer
+          example: 1
+        balance:
+          description: 'Balance in the account'
+          type: integer
+          example: 300
+        accountType:
+          description: 'Type of account'
+          type: string
+          example: Current Account
+        transactions:
+          description: 'List of transactions for that account'
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+            
+    Transaction:
+       type: object
+       properties:
+        amount:
+          description: 'Amount is to be credit or debit'
+          type: integer
+          example: 50
+        time:
+          description: 'time of occurance'
+          type: string
+          example: 22-08-2025
+        transactionType:
+          description: 'Transaction type credit or debit'
+          type: string
+          example: CREDIT
+    
+      
+    
+    
+    
+

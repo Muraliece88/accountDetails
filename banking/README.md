@@ -14,6 +14,8 @@ No checkstyles files used
 2. API first approach was chosen 
 3. Due to lack of time the developer could configure spring cloud config server to externalize the configuration properties
 4. No plugins used to generate any class or methods
+5. Currency is not taken into consideration to keep the application simple
+6. Transaction API is not exposed to outside hence entity is accepted as input
 
 ## Code setup and run(if docker is installed)
 1. Clone the project from gitHub
