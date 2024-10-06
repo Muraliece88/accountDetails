@@ -16,6 +16,8 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.random.RandomGenerator;
@@ -72,7 +74,8 @@ public class ServiceImpl implements  Services {
         customer.getAccounts().add(account);
         accountIMap.put(account.getAccountId(),account);
         if (initialCredit.compareTo(BigDecimal.ZERO) > 0) {
-                utility.fetchProxyDetails(account, initialCredit, discoveryClient, apiName, apiUser, apiPass, apiPath, apiEndpoint, traceId);
+            WebClient client= utility.fetchProxyDetails(discoveryClient, apiName, apiUser, apiPass, apiPath);
+            utility.createTransaction(account,initialCredit,client,apiEndpoint,traceId);
             }
             customersIMap.put(customerId,customer);
             String body = String.format("New Account %s is opened for the customer %s", account.getAccountId(), customerId);

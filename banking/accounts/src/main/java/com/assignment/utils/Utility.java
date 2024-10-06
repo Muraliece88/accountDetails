@@ -25,24 +25,21 @@ public class Utility {
     /**
      * Method to fetch the AP details from Service Registry
      *
-     * @param createdAcc
-     * @param creditamt
+
      * @param discoveryClient
      * @param appName
      * @param apiUser
      * @param apiPass
      * @param apiBasePath
-     * @param apiEndpoint
-     * @param traceId
+
      */
-    public void  fetchProxyDetails(Account createdAcc, BigDecimal creditamt, DiscoveryClient discoveryClient, String appName, String apiUser,
-                                   String apiPass, String apiBasePath, String apiEndpoint, String traceId)
+    public WebClient  fetchProxyDetails( DiscoveryClient discoveryClient, String appName, String apiUser,
+                                   String apiPass, String apiBasePath)
     {
         String hostPort= discoveryClient.getInstances(appName).
                 stream().map(serviceInstance -> serviceInstance.getUri().toString())
                 .findAny().orElseThrow(()-> new URINotFoundException("No such uri available"));
-        WebClient client=getWebClient(hostPort+apiBasePath, apiUser,apiPass);
-        createTransaction(createdAcc,creditamt,client,apiEndpoint,traceId);
+        return getWebClient(hostPort+apiBasePath, apiUser,apiPass);
 
     }
 

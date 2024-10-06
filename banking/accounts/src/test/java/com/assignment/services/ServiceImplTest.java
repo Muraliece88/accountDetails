@@ -55,8 +55,9 @@ class ServiceImplTest {
         Mockito.when(hazelcastInstance.getMap(anyString())).thenReturn(mockCust);
         when(mockCust.get(123L)).thenReturn(mockCustomer);
         when(discoveryClient.getInstances(anyString())).thenReturn(mockInstance);
-        doNothing().when(utility).
-                fetchProxyDetails(mockAccount,initailAmt,discoveryClient,"test","test","test","test","test","test");
+       when(utility.
+               fetchProxyDetails(discoveryClient,
+                       "test","test","test","test")).thenReturn(webClient);
         ResponseEntity<String> result= service.createAccount(123L,initailAmt,"0009");
         assertEquals(result.getStatusCode().value(),201);
     }
