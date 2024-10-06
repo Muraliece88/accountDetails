@@ -1,0 +1,20 @@
+FROM maven:3.8.5-openjdk-17 AS build
+
+WORKDIR /app
+
+COPY pom.xml ./
+COPY service-registry/pom.xml service-registry/
+COPY service-registry/src service-registry/src
+COPY service-registry/src/main/resources service-registry/src/main/resources
+
+RUN mvn -f service-registry/pom.xml clean package
+
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+
+COPY --from=build /app/service-registry/target/service-registry-*.jar registry.jar
+EXPOSE 8761
+
+CMD ["java","-jar","registry.jar"]
+
+
