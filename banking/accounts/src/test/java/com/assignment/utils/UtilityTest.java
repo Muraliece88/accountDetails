@@ -63,8 +63,8 @@ class UtilityTest {
         when(bodySpec.headers(any())).thenReturn(bodySpec);
         when(bodySpec.bodyValue(any())).thenReturn(headerSpec);
         when(headerSpec.exchangeToMono(any())).thenReturn(mockMono);
+        when(mockMono.doOnError(any())).thenReturn(mockMono);
         when(bodySpec.accept(any())).thenReturn(bodySpec);
-        when(mockMono.onErrorMap(any())).thenReturn(mockMono);
         utility.createTransaction(accountMock,mockCal,mockClient,"test","test");
 
     }
