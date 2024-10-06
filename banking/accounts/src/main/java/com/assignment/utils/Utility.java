@@ -84,7 +84,7 @@ public class Utility {
                 bodyValue(createdAcc).exchangeToMono(
                         clientResponse ->
                                 Mono.just(String.valueOf(clientResponse.statusCode().value())))
-                .onErrorMap(e-> {
+                .doOnError(e-> {
                     log.error(e.getMessage());
                     throw new TransactionException("Technical Error when creating a transaction entry");})
                 .blockOptional().ifPresent(response->{
@@ -95,6 +95,8 @@ public class Utility {
                     }
                     else {
                         log.error("Error while transaction insertion for requestId: {}" , traceId );
+                        throw new TransactionException("Error while transaction insertion for the new account"+createdAcc.getAccountId());
+
                     }
                 });
     }

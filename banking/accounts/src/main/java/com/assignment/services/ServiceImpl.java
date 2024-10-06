@@ -22,8 +22,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.random.RandomGenerator;
 
-import static com.assignment.constants.AccountConstants.ACCOUNT;
-import static com.assignment.constants.AccountConstants.CUSTOMERS;
+import static com.assignment.constants.AccountConstants.*;
 
 
 @Service
@@ -63,8 +62,8 @@ public class ServiceImpl implements  Services {
 
     @Override
     public ResponseEntity<String> createAccount(Long customerId, BigDecimal initialCredit,String traceId) {
-        IMap<Long,Customers> customersIMap=hazelcastInstance.getMap("customers");
-        IMap<Long,Account> accountIMap=hazelcastInstance.getMap("account");
+        IMap<Long,Customers> customersIMap=hazelcastInstance.getMap(CUSTOMERS);
+        IMap<Long,Account> accountIMap=hazelcastInstance.getMap(ACCOUNTS);
         Customers customer=Optional.ofNullable(customersIMap.get(customerId)).orElseThrow(()-> new UserNotFoundException(String.format("Customer with id %s not found", customerId)));
         RandomGenerator randomGenerator=RandomGenerator.getDefault();
         Account account=new Account();
@@ -92,7 +91,7 @@ public class ServiceImpl implements  Services {
     public ResponseEntity<CustomerDTO> getUserAccounts(Long customerId)
     {
         IMap<Long,Customers> customersIMap=hazelcastInstance.getMap(CUSTOMERS);
-        IMap<Long,Account> accountIMap=hazelcastInstance.getMap(ACCOUNT);
+        IMap<Long,Account> accountIMap=hazelcastInstance.getMap(ACCOUNTS);
         Customers customerDetails= Optional.ofNullable(customersIMap.get(customerId))
                 .orElseThrow(()-> new UserNotFoundException
                         (String.format("Customer with id %s not found", customerId)));

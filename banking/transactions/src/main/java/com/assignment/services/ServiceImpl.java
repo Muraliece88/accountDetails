@@ -14,8 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.random.RandomGenerator;
 
-import static com.assignment.constants.TransactionConstants.ACCOUNT;
-import static com.assignment.constants.TransactionConstants.TRANSACTIONS;
+import static com.assignment.constants.TransactionConstants.*;
 
 @Service
 public class ServiceImpl implements  Services {
@@ -27,7 +26,7 @@ public class ServiceImpl implements  Services {
 
     @Override
     public ResponseEntity<String> insertTransaction(Account account, BigDecimal transferAmount) {
-        IMap<Long,Account> accountIMap=hazelcastInstance.getMap(ACCOUNT);
+        IMap<Long,Account> accountIMap=hazelcastInstance.getMap(ACCOUNTS);
         IMap<Long, Transaction> transactionIMap=hazelcastInstance.getMap(TRANSACTIONS);
         Optional.ofNullable(accountIMap.get(account.getAccountId())).orElseThrow(()-> new AccountNotFoundException(String.format("Account with id %s not found", account.getAccountId())));
         RandomGenerator randomGenerator=RandomGenerator.getDefault();

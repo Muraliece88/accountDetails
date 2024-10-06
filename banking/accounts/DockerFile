@@ -1,0 +1,20 @@
+FROM maven:3.8.5-openjdk-17 AS build
+
+WORKDIR /app
+
+COPY pom.xml ./
+COPY accounts/pom.xml accounts/
+COPY accounts/src accounts/src
+COPY accounts/src/main/resources accounts/src/main/resources
+
+RUN mvn -f accounts/pom.xml clean package
+
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+
+COPY --from=build /app/accounts/target/accounts-*.jar accounts.jar
+EXPOSE 8082
+
+CMD ["java","-jar","accounts.jar"]
+
+

@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import static com.assignment.constants.AccountConstants.*;
+
 @Slf4j
 @Configuration
 public class HazelcastConfig {
@@ -20,9 +22,9 @@ public class HazelcastConfig {
     {
         Config config=new Config();
         config.setInstanceName("hazel-instance")
-                .addMapConfig(new MapConfig().setName("customers"))
-                .addMapConfig(new MapConfig().setName("account"))
-                .addMapConfig(new MapConfig().setName("transactions"));
+                .addMapConfig(new MapConfig().setName(CUSTOMERS))
+                .addMapConfig(new MapConfig().setName(ACCOUNTS))
+                .addMapConfig(new MapConfig().setName(TRANSACTIONS));
         NetworkConfig networkConfig=config.getNetworkConfig();
         JoinConfig joinConfig=networkConfig.getJoin();
         joinConfig.getMulticastConfig().setEnabled(true);

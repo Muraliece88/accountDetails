@@ -30,8 +30,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.assignment.constants.TransactionConstants.ACCOUNT;
-import static com.assignment.constants.TransactionConstants.TRANSACTIONS;
+import static com.assignment.constants.TransactionConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -61,7 +60,7 @@ class TransactionControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .build();
         hazelcastInstance= Hazelcast.newHazelcastInstance();
-        accountIMap=hazelcastInstance.getMap(ACCOUNT);
+        accountIMap=hazelcastInstance.getMap(ACCOUNTS);
         transactionIMap=hazelcastInstance.getMap(TRANSACTIONS);
         accountIMap.put(account.getAccountId(),account);
 

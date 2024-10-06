@@ -1,0 +1,45 @@
+services:
+
+  registry-service:
+    image: registry
+    build:
+      context: .
+      dockerfile: service-registry/DockerFile
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+
+  transaction-service:
+    image: transactions
+    build:
+      context: .
+      dockerfile: transactions/DockerFile
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    depends_on:
+     - registry-service
+    ports:
+      - "8081:8081"
+    networks:
+      - app-network
+
+  accounts-service:
+    image: accounts
+    build:
+      context: .
+      dockerfile: accounts/DockerFile
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    depends_on:
+     - registry-service
+    ports:
+      - "8082:8082"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
