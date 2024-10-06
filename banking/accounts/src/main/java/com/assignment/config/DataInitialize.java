@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import static com.assignment.constants.AccountConstants.CUSTOMERS;
+
 
 @Slf4j
 @Component
@@ -29,10 +31,10 @@ public class DataInitialize {
         ClassPathResource resource=new ClassPathResource("data.json");
         InputStream inputStream= resource.getInputStream();
         JsonNode root= objectMapper.readTree(inputStream);
-        List<Customers> customersList=objectMapper.readValue(root.get("customers").toString(),
+        List<Customers> customersList=objectMapper.readValue(root.get(CUSTOMERS).toString(),
                new TypeReference<List<Customers>>() {
                });
-        IMap<Long,Customers> customersIMap=hazelcastInstance.getMap("customers");
+        IMap<Long,Customers> customersIMap=hazelcastInstance.getMap(CUSTOMERS);
         for(Customers customers: customersList)
         {
             customersIMap.put(customers.getCustomerId(), customers);
