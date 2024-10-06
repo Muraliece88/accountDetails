@@ -10,6 +10,9 @@ import java.util.UUID;
 
 import static com.assignment.constants.TransactionConstants.CORRELATION_ID;
 
+/**
+ * Class to propage the trace id from the calling API for logging and tracing
+ */
 @Component
 public class CorelationFilter implements Filter {
 
@@ -26,7 +29,6 @@ public class CorelationFilter implements Filter {
         if (correlationId == null || correlationId.isEmpty()) {
             correlationId = UUID.randomUUID().toString();
         }
-
         MDC.put(CORRELATION_ID, correlationId);
 
         try {

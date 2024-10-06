@@ -17,7 +17,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(autho -> autho
                         .requestMatchers(eurekaUri).hasRole("SUPERUSER")
-                        .requestMatchers(transactionUri).hasRole("SUPERUSER")
+                        .requestMatchers(transactionUri).hasRole("ADMIN")
                         .anyRequest().authenticated()
                 );
         http.formLogin(Customizer.withDefaults());

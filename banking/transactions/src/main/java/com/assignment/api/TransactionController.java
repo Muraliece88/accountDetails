@@ -24,6 +24,13 @@ public class TransactionController {
     public TransactionController(ServiceImpl serviceImpl) {
         this.serviceImpl = serviceImpl;
     }
+
+    /**
+     * API method to create new transaction
+     * @param account
+     * @param amount
+     * @return
+     */
     @PostMapping("/create")
     public ResponseEntity<String> saveTransaction(
             @RequestBody @Valid Account account , @Valid @RequestParam BigDecimal amount)

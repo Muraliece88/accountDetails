@@ -17,7 +17,9 @@ import java.util.List;
 
 import static com.assignment.constants.AccountConstants.CUSTOMERS;
 
-
+/**
+ * Class  to load initial data
+ */
 @Slf4j
 @Component
 public class DataInitialize {

@@ -1,7 +1,5 @@
 package com.assignment.config;
 
-import com.assignment.entities.Customers;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hazelcast.config.Config;
 import com.hazelcast.config.JoinConfig;
 import com.hazelcast.config.MapConfig;

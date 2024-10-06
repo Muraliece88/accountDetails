@@ -13,12 +13,14 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import java.time.LocalDateTime;
 
+/**
+ * Global exception handlers
+ */
 @Slf4j
 @RestControllerAdvice(basePackages = "com.assignment")
 public class ExceptionsHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Errors> handleException(Exception ex) {
-
         HttpStatus status = eveluateExceptionKind(ex);
         log.error("Exception occured when processing the request:"+ex.getMessage());
         Errors errors=new Errors(status.value(), ex.getMessage(), LocalDateTime.now());

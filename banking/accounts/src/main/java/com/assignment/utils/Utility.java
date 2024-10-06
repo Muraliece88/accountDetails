@@ -1,6 +1,4 @@
 package com.assignment.utils;
-
-import com.assignment.constants.AccountConstants;
 import com.assignment.entities.Account;
 import com.assignment.exceptions.TransactionException;
 import com.assignment.exceptions.URINotFoundException;
